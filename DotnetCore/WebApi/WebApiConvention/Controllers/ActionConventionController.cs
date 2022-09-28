@@ -38,7 +38,7 @@ namespace WebApiConvention.Controllers
         }
 
         [HttpGet()]
-        public ActionResult<IEnumerable<WeatherForecast>> ReturnValueConvention() //推荐使用 ActionResult<T>
+        public ActionResult<IEnumerable<WeatherForecast>> ReturnValueConvention() //推荐使用 ActionResult<T>, 原因:示例4
         {
             return _WeatherForecastArray;
         }
@@ -72,6 +72,27 @@ namespace WebApiConvention.Controllers
         {
             return _WeatherForecastArray[0];
         }
+
+
+        [HttpGet()]
+        public ActionResult<ActionReturnValue<WeatherForecast>> ReturnValueConvention4()//示例4
+        {
+            var value = new ActionReturnValue<WeatherForecast>() { Data = _WeatherForecastArray[0] };
+            return new JsonResult(value) { };
+        }
+
+        //[HttpGet()]
+        //public ActionReturnValue<WeatherForecast> ReturnValueConvention4_2() //示例4, 不能这样写
+        //{
+        //    var value = new ActionReturnValue<WeatherForecast>() { Data = _WeatherForecastArray[0] };
+        //    return new JsonResult(value) { }; //隐式转换失败
+        //}
+
         #endregion
+    }
+
+    public class ActionReturnValue<T>
+    {
+        public T Data { get; set; }
     }
 }
