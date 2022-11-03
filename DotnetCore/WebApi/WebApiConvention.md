@@ -5,8 +5,10 @@
 # action方法
 
 - 使用异步,方法名可以不用Async 结尾(因为action是给前端调用的)
+- 推荐使用 ActionResult<T> 
+  - 可以让swagger 知道方法的返回值
+  - 更多: https://learn.microsoft.com/zh-cn/aspnet/core/web-api/action-return-types?view=aspnetcore-6.0
 
-- 推荐使用ActionResult<T> , 可以让swagger 知道方法的返回值
 
 # 状态码
 
@@ -32,7 +34,6 @@
 
   - 不知道用哪个状态码就用400(400表示请求错误)
 
-    
 
 好处:
 
