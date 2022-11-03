@@ -1,23 +1,25 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using WebApiConvention.Model;
 
 namespace WebApiConvention.Controllers
 {
-    /// <summary>
-    /// 
-    /// </summary>
+
+    /*
+     * 控制器方法返回值:  建议使用 ActionResult<T>
+     */
     [ApiController]
     [Route("[controller]/[action]")] //推荐使用这个路由
-    public class ActionConventionController : ControllerBase
+    public class ReturnValueTypeConventionController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<ActionConventionController> _logger;
+        private readonly ILogger<ReturnValueTypeConventionController> _logger;
 
-        public ActionConventionController(ILogger<ActionConventionController> logger)
+        public ReturnValueTypeConventionController(ILogger<ReturnValueTypeConventionController> logger)
         {
             _logger = logger;
         }
@@ -75,23 +77,23 @@ namespace WebApiConvention.Controllers
 
 
         [HttpGet()]
-        public ActionResult<ActionReturnValue<WeatherForecast>> ReturnValueConvention4()//示例4
+        public ActionResult<ReturnValue<WeatherForecast>> ReturnValueConvention4()//示例4
         {
-            var value = new ActionReturnValue<WeatherForecast>() { Data = _WeatherForecastArray[0] };
+            var value = new ReturnValue<WeatherForecast>() { Data = _WeatherForecastArray[0] };
             return new JsonResult(value) { };
         }
 
-        //[HttpGet()]
-        //public ActionReturnValue<WeatherForecast> ReturnValueConvention4_2() //示例4, 不能这样写
-        //{
-        //    var value = new ActionReturnValue<WeatherForecast>() { Data = _WeatherForecastArray[0] };
-        //    return new JsonResult(value) { }; //隐式转换失败
-        //}
+        [HttpGet()]
+        public ReturnValue<WeatherForecast> ReturnValueConvention4_2() //示例4 的另一种写法
+        {
+            ReturnValue<WeatherForecast> value = new ReturnValue<WeatherForecast>() { Data = _WeatherForecastArray[0] };
+            return value;
+        }
 
         #endregion
     }
 
-    public class ActionReturnValue<T>
+    public class ReturnValue<T>
     {
         public T Data { get; set; }
     }
